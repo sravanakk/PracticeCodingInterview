@@ -1,8 +1,13 @@
 package DataStructures.Trie;
 
+/**
+ * User: Sravana Kumar K
+ * Date: 09-11-2018 09:02 PM
+ */
 public class TrieInsertSearch {
 
     static Integer MAX_ALPHABET = 26;
+    private TrieNode root;
 
     static class TrieNode {
 
@@ -13,9 +18,11 @@ public class TrieInsertSearch {
             children = new TrieNode[MAX_ALPHABET];
             isLeafNode = false;
         }
-    }
+    };
 
-    TrieNode root;
+    TrieInsertSearch() {
+        root = new TrieNode();
+    }
 
      public void insert(String key) {
         TrieNode crawlNode = root;
@@ -44,7 +51,6 @@ public class TrieInsertSearch {
 
     public static void main(String[] args) {
         TrieInsertSearch trieInsertSearch = new TrieInsertSearch();
-        trieInsertSearch.root = new TrieNode();
         trieInsertSearch.insert("sravanapriyam");
         trieInsertSearch.insert("sravana");
         trieInsertSearch.insert("priyam");
