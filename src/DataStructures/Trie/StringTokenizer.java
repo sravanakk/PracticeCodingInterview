@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class StringTokenizer {
 
-    private List<String> getTokens(String word, TrieInsertSearch disctionary) {
-        if (disctionary.search(word)) return new ArrayList<>(Arrays.asList(word));
+    private List<String> getTokens(String word, Dictionary dictionary) {
+        if (dictionary.search(word)) return new ArrayList<>(Arrays.asList(word));
 
         List<String> tokens = new ArrayList<>();
         for (int i = 1; i < word.length(); i++) {
             String prefix = word.substring(0, i);
-            if (disctionary.search(prefix)) {
+            if (dictionary.search(prefix)) {
                 String suffix = word.substring(i);
-                List<String> ret = getTokens(suffix, disctionary);
+                List<String> ret = getTokens(suffix, dictionary);
                 if (ret != null) {
                     tokens.add(prefix);
                     tokens.addAll(ret);
@@ -29,14 +29,14 @@ public class StringTokenizer {
         return null;
     }
 
-    private Boolean ableToBreakOrNot(String word, TrieInsertSearch disctionary) {
-        if (disctionary.search(word)) return Boolean.TRUE;
+    private Boolean ableToBreakOrNot(String word, Dictionary dictionary) {
+        if (dictionary.search(word)) return Boolean.TRUE;
 
         for (int i = 1; i < word.length(); i++) {
             String prefix = word.substring(0, i);
-            if (disctionary.search(prefix)) {
+            if (dictionary.search(prefix)) {
                 String suffix = word.substring(i);
-                if (ableToBreakOrNot(suffix, disctionary)) {
+                if (ableToBreakOrNot(suffix, dictionary)) {
                     return Boolean.TRUE;
                 }
             }
@@ -44,14 +44,14 @@ public class StringTokenizer {
         return Boolean.FALSE;
     }
 
-    private String getTokenizedString(String word, TrieInsertSearch disctionary) {
-        if (disctionary.search(word)) return word;
+    private String getTokenizedString(String word, Dictionary dictionary) {
+        if (dictionary.search(word)) return word;
 
         for (int i = 1; i < word.length(); i++) {
             String prefix = word.substring(0, i);
-            if (disctionary.search(prefix)) {
+            if (dictionary.search(prefix)) {
                 String suffix = word.substring(i);
-                String ret = getTokenizedString(suffix, disctionary);
+                String ret = getTokenizedString(suffix, dictionary);
                 if (ret != null) {
                     return  prefix + " " + ret;
                 }
@@ -61,16 +61,16 @@ public class StringTokenizer {
     }
 
     public static void main(String[] args) {
-        TrieInsertSearch disctionary = new TrieInsertSearch();
+        Dictionary dictionary = new Dictionary();
         String[] words = { "on", "pi", "pin", "pins", "sand", "and", "niddle", "niddles", "less"};
         for (String word : words) {
-            disctionary.insert(word);
+            dictionary.insert(word);
         }
         String sentence = "onpinsandniddles";
         StringTokenizer stringTokenizer = new StringTokenizer();
 
-        System.out.println(stringTokenizer.ableToBreakOrNot(sentence, disctionary));
-        System.out.println(stringTokenizer.getTokens(sentence, disctionary));
-        System.out.println(stringTokenizer.getTokenizedString(sentence, disctionary));
+        System.out.println(stringTokenizer.ableToBreakOrNot(sentence, dictionary));
+        System.out.println(stringTokenizer.getTokens(sentence, dictionary));
+        System.out.println(stringTokenizer.getTokenizedString(sentence, dictionary));
     }
 }
